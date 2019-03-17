@@ -19,17 +19,16 @@ $query = "INSERT INTO `users` (`id`, `name`, `login`, `password`) VALUES (NULL, 
 
 $result = $link->query("SELECT * FROM `users` WHERE `login` LIKE '$email'");
 if ($result->num_rows > 0) {
-    echo "Такой Email-адрес уже используется, возможно вы уже проходили регистрацию.";
+    echo "<h1><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h1></center>
+    ";
+    header( 'Refresh:6; URL=register-form.html' );
+
 } else {
     $sql = mysqli_query($link, $query);
-    echo "Вы успешно зарегистрированы!";
+    echo "<h1><center>Вы успешно зарегистрированы!<br> Перевод на страницу авторизации...</center></h1>";
+    mysqli_close($mysqli);
+    header( 'Refresh:4; URL=index.html' );
+
 }
 
-
-
-
-
-
-mysqli_close($mysqli);
-
- ?>
+?>
