@@ -3,7 +3,7 @@ session_start();
 //Получение данных с формы
 $taskname = $_POST['taskname'];
 $taskdesc = $_POST['description'];
-$filepath = $_POST['filepath'];
+$filename = $_FILES['filename']['name'];
 
 //Проверка на пустоту
 foreach ($_POST as $key => $value) {
@@ -27,11 +27,13 @@ if (!$link) {
     }
 
 //Подготовка запроса
-$query = "INSERT INTO `tasks` (`taskname`, `task`, `filepath`) VALUES ('$taskname', '$taskdesc', '$filepath')";
+$query = "INSERT INTO `tasks` (`taskname`, `task`, `filename`) VALUES ('$taskname', '$taskdesc', '$filename')";
 
-//Добавление в БД
+//Добавление в БД и перенос изображения
 $sql = mysqli_query($link, $query);
-echo "<h2><center>Задача успешно добавлена!</center></h2>";
+$tmpfile = $_FILES['filename']['tmp_name'];
+$moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
+echo "<h2><center>Задача успешно добавлена!<br></center></h2>";
 mysqli_close($link);
-header( 'Refresh:2; URL=list.php' );
+header( 'Refresh:6; URL=list.php' );
 ?>

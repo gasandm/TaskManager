@@ -17,14 +17,15 @@
 
   <body>
     <div class="form-wrapper text-center">
-      <form class="form-signin" action="create-task.php" method="POST">
+      <form class="form-signin" enctype="multipart/form-data" action="create-task.php" method="POST">
         <img class="mb-4" src="assets/img/logo.jpg" alt="" width="122" height="122">
         <h1 class="h3 mb-3 font-weight-normal">Добавить запись</h1>
         <label for="inputEmail" class="sr-only">Название</label>
         <input type="text" id="inputEmail" class="form-control" name="taskname" placeholder="Название" required>
         <label for="inputEmail" class="sr-only">Описание</label>
         <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Описание"></textarea>
-        <input type="file" name="filepath">
+        <input type="hidden" name="MAX_FILE_SIZE" value="500000">
+        <input type="file" name="filename">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Отправить</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
       </form>
