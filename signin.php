@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $email = $_POST['email'];
 $password = md5($_POST['password']);
 $checkbox = $_POST['remember'];
