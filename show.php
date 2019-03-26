@@ -40,5 +40,9 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
     </div>
 <?php endforeach; ?>
 
+<section class="jumbotron text-center">
+<a href="edit.php?id=<?php echo $taskid; ?>" class="btn btn-primary my-2">Редактировать запись</a>
+</section>
+
   </body>
 </html>
