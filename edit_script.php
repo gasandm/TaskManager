@@ -9,6 +9,12 @@ $tmpfile = $_FILES['filename']['tmp_name'];
 $userid = $_SESSION['name'];
 $oldImg = $_POST['old_img'];
 
+if(empty($taskname) or empty($taskdesc)) {
+    echo "<h2><center>Заполните все поля!<br></center></h2>";
+    echo "<h2><center><a href=" . $_SERVER['HTTP_REFERER'] . ">Назад</a></center></h2>";
+    exit;
+};
+
 //Проверка на изменение картинки
 if($filename == "") {
     $filename = $_POST['old_img'];
