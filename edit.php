@@ -2,7 +2,9 @@
 session_start();
 
 if(!isset($_SESSION['name'])) {
-    header('Location: /index.html');
+    if (!isset($_COOKIE['name'])) {
+        header('Location: /index.html');
+    }
 }
 $taskid = $_GET['id'];
 

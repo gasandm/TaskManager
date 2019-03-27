@@ -2,8 +2,11 @@
 session_start();
 
 if(!isset($_SESSION['name'])) {
-    header('Location: /index.html');
+    if (!isset($_COOKIE['name'])) {
+        header('Location: /index.html');
+    }
 }
+
 $pdo = new PDO('mysql:host=localhost;dbname=myBase', 'admin', '');
 
 //Запрос в БД
@@ -21,7 +24,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
   <head>
     <meta charset="utf-8">
 
-    <title>Tasks</title>
+    <title>Задачи</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
