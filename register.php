@@ -1,8 +1,5 @@
 <?php
-//Получение данных с формы
-$email = $_POST['email'];
-$password = md5($_POST['password']);
-$username = $_POST['name'];
+require_once( "include/connection.php" );
 
 //Проверка на пустоту
 foreach ($_POST as $key => $value) {
@@ -12,12 +9,20 @@ foreach ($_POST as $key => $value) {
         exit;
     }
 }
+//Получение данных с формы
+$email = $_POST['email'];
+$password = md5($_POST['password']);
+$username = $_POST['name'];
+
 //Подготовка запроса
-$query = "INSERT INTO `users` (`id`, `name`, `login`, `password`) VALUES (NULL, '$username', '$email', '$password')";
+$sql = "INSERT INTO `users` (`id`, `name`, `login`, `password`) VALUES (NULL, '$username', '$email', '$password')";
+
 
 //Проверка на существование
-$result = $link->query("SELECT * FROM `users` WHERE `login` LIKE '$email'");
-if ($result->num_rows > 0)
+$check = $pdo->prepare("SELECT * FROM `users` WHERE `login` LIKE '$email'");
+$check->execute();
+$checkUser = $check->fetch();
+if ($checkUser)
 {
     echo "<h2><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h2></center>
     ";
@@ -26,9 +31,10 @@ if ($result->num_rows > 0)
 }
 else {
     //Добавление в БД
-    $sql = mysqli_query($link, $query);
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetch();
     echo "<h2><center>Вы успешно зарегистрированы!<br> Перевод на страницу авторизации...</center></h2>";
-    mysqli_close($link);
     header( 'Refresh:4; URL=index.html' );
 }
 

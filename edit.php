@@ -1,12 +1,8 @@
 <?php
 session_start();
 require_once( "include/connection.php" );
+require_once( "include/check_user.php" );
 
-if(!isset($_SESSION['name'])) {
-    if (!isset($_COOKIE['name'])) {
-        header('Location: /index.html');
-    }
-}
 $taskid = $_GET['id'];
 
 //Запрос в БД
@@ -15,7 +11,7 @@ $statement = $pdo->prepare($sql);
 $statement->execute([
     ':id' => $taskid
 ]);
-$tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
+$task = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -65,7 +61,6 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
           </div>
         </div>
       </header>
-      <?php foreach ($tasks as $task): ?>
     <div class="form-wrapper text-center">
       <form class="form-signin" enctype="multipart/form-data" action="edit_script.php" method="POST">
         <img class="mb-4" src="assets/img/logo.jpg" alt="" width="122" height="122">
@@ -83,6 +78,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
         <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
       </form>
     </div>
-      <?php endforeach; ?>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
   </body>
 </html>

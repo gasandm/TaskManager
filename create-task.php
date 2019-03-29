@@ -1,12 +1,8 @@
 <?php
 session_start();
 require_once( "include/connection.php" );
+require_once( "include/check_user.php" );
 
-if(!isset($_SESSION['name'])) {
-    if (!isset($_COOKIE['name'])) {
-        header('Location: /index.html');
-    }
-}
 //Получение данных и проверка на пустоту
 foreach ($_POST as $key => $value) {
     if(empty($value)) {
@@ -21,10 +17,9 @@ $filename = $_FILES['filename']['name'];
 $tmpfile = $_FILES['filename']['tmp_name'];
 $userid = $_SESSION['name'];
 
-//Подготовка запроса
+//Добавление в БД и перенос изображения
 $sql = "INSERT INTO `tasks` (`id`, `user_id`, `taskname`, `task`, `filename`) VALUES (NULL, '$userid', '$taskname', '$taskdesc', '$filename')";
 
-//Добавление в БД и перенос изображения
 $statement = $pdo->prepare($sql);
 $statement->execute();
 

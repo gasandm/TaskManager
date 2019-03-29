@@ -1,25 +1,11 @@
 <?php
-session_start();
-require_once( "include/connection.php" );
-require_once( "include/check_user.php" );
-
-$taskid = $_GET['id'];
-
-//Запрос в БД
-$sql = 'SELECT * from tasks where id=:id';
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':id' => $taskid
-]);
-
-$tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
-?>
+session_start(); ?>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
 
-    <title>Просмотр задачи</title>
+    <title>Создать задачу</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -29,6 +15,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 
     </style>
   </head>
+
 
   <body>
       <header>
@@ -40,7 +27,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
                 <p class="text-muted">Обучающий проект</p>
               </div>
               <div class="col-sm-4 offset-md-1 py-4">
-                <h4 class="text-white"> <?php echo $_SESSION['name']; ?></h4>
+                <h4 class="text-white"><?=$_SESSION['name']; ?></h4>
                 <ul class="list-unstyled">
                   <li><a href="logout.php" class="text-white">Выйти</a></li>
                 </ul>
@@ -60,20 +47,21 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
           </div>
         </div>
       </header>
-      <?php foreach ($tasks as $task): ?>
     <div class="form-wrapper text-center">
-      <img src="img/<?php echo $task['filename']; ?>" alt="" width="400">
-      <h2><?php echo $task['taskname']; ?></h2>
-      <p>
-        <?php echo $task['task']; ?>
-      </p>
+      <form class="form-signin" enctype="multipart/form-data" action="create-task.php" method="POST">
+        <img class="mb-4" src="assets/img/logo.jpg" alt="" width="122" height="122">
+        <h1 class="h3 mb-3 font-weight-normal">Добавить запись</h1>
+        <label for="inputEmail" class="sr-only">Название</label>
+        <input type="text" id="inputEmail" class="form-control" name="taskname" placeholder="Название" required>
+        <label for="inputEmail" class="sr-only">Описание</label>
+        <textarea name="description" class="form-control" cols="30" rows="10" placeholder="Описание"></textarea>
+        <input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+        <input type="file" name="filename">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Добавить</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
+      </form>
     </div>
-<?php endforeach; ?>
-
-<section class="jumbotron text-center">
-<a href="edit.php?id=<?php echo $taskid; ?>" class="btn btn-primary my-2">Редактировать запись</a>
-</section>
-<script src="assets/js/jquery.js"></script>
-<script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
   </body>
 </html>

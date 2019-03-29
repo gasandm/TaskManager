@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once( "include/connection.php" );
+require_once( "include/check_user.php" );
 
 //Получение данных с формы
 $taskname = $_POST['taskname'];
