@@ -1,8 +1,9 @@
 <?php
 session_start();
+require_once( "include/connection.php" );
+
 $taskid = $_GET['id'];
 $imgName = $_GET['img_name'];
-$pdo = new PDO('mysql:host=localhost;dbname=myBase', 'admin', '');
 
 //Запрос в БД
 $sql = 'DELETE from tasks where id=:id';

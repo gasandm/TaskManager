@@ -1,19 +1,13 @@
 <?php
 session_start();
+require_once( "include/connection.php" );
 
 if(!isset($_SESSION['name'])) {
     if (!isset($_COOKIE['name'])) {
         header('Location: /index.html');
     }
 }
-
-//Получение данных с формы
-$taskname = $_POST['taskname'];
-$taskdesc = $_POST['description'];
-$filename = $_FILES['filename']['name'];
-$tmpfile = $_FILES['filename']['tmp_name'];
-$userid = $_SESSION['name'];
-//Проверка на пустоту
+//Получение данных и проверка на пустоту
 foreach ($_POST as $key => $value) {
     if(empty($value)) {
         echo "<h2><center>Ошибка ввода. Введите корректные данные.</h2></center>";
@@ -21,27 +15,20 @@ foreach ($_POST as $key => $value) {
         exit;
     }
 }
-
-$servername = "localhost";
-$dbpass = "";
-$dbname = "myBase";
-$dbuser = "admin";
-
-//Соединение с проверкой к БД
-$link = mysqli_connect($servername, $dbuser, $dbpass, $dbname);
-if (!$link) {
-      echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
-      exit;
-    }
+$taskname = $_POST['taskname'];
+$taskdesc = $_POST['description'];
+$filename = $_FILES['filename']['name'];
+$tmpfile = $_FILES['filename']['tmp_name'];
+$userid = $_SESSION['name'];
 
 //Подготовка запроса
-$query = "INSERT INTO `tasks` (`id`, `user_id`, `taskname`, `task`, `filename`) VALUES (NULL, '$userid', '$taskname', '$taskdesc', '$filename')";
+$sql = "INSERT INTO `tasks` (`id`, `user_id`, `taskname`, `task`, `filename`) VALUES (NULL, '$userid', '$taskname', '$taskdesc', '$filename')";
 
-//Добавление в БД и перенос изображени
-$sql = mysqli_query($link, $query);
+//Добавление в БД и перенос изображения
+$statement = $pdo->prepare($sql);
+$statement->execute();
 
 $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
 echo "<h2><center>Задача успешно добавлена!<br></center></h2>";
-mysqli_close($link);
-header( 'Refresh:2; URL=list.php' );
+header( 'Refresh:1; URL=list.php' );
 ?>

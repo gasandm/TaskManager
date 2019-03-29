@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once( "include/connection.php" );
 
 if(!isset($_SESSION['name'])) {
     if (!isset($_COOKIE['name'])) {
@@ -7,8 +8,6 @@ if(!isset($_SESSION['name'])) {
     }
 }
 $taskid = $_GET['id'];
-
-$pdo = new PDO('mysql:host=localhost;dbname=myBase', 'admin', '');
 
 //Запрос в БД
 $sql = 'SELECT * from tasks where id=:id';

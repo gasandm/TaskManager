@@ -4,20 +4,12 @@ $email = $_POST['email'];
 $password = md5($_POST['password']);
 $checkbox = $_POST['remember'];
 
-$servername = "localhost";
-$dbpass = "";
-$dbname = "myBase";
-$dbuser = "admin";
+//Соединение с БД
+$link = mysqli_connect("localhost", "admin", "", "myBase");
 
-//Соединение с проверкой к БД
-$link = mysqli_connect($servername, $dbuser, $dbpass, $dbname);
-if (!$link) {
-      echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
-      session_destroy();
-      exit;
-    }
 //Проверка на соответствие
 $result = $link->query("SELECT * FROM `users` WHERE `login` LIKE '$email' and `password` LIKE '$password'");
+
 if ($result->num_rows == 1)
 {  //Создание сессии и куки(по желанию)
     $_SESSION['name'] = $_POST['email'];

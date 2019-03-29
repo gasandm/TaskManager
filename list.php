@@ -1,14 +1,12 @@
 <?php
 session_start();
+require_once( "include/connection.php" );
 
 if(!isset($_SESSION['name'])) {
     if (!isset($_COOKIE['name'])) {
         header('Location: /index.html');
     }
 }
-
-$pdo = new PDO('mysql:host=localhost;dbname=myBase', 'admin', '');
-
 //Запрос в БД
 $sql = 'SELECT * from tasks where user_id=:user_id';
 $statement = $pdo->prepare($sql);
@@ -67,7 +65,7 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
 
       <section class="jumbotron text-center">
         <div class="container">
-          <h1 class="jumbotron-heading">Проект Task-manager</h1>
+          <h1 class="jumbotron-heading">Task-Manager</h1>
           <p class="lead text-muted">Здесь вы можете оставлять записи для дальнейшей обработки</p>
           <p>
             <a href="create-form.html" class="btn btn-primary my-2">Добавить запись</a>

@@ -12,19 +12,6 @@ foreach ($_POST as $key => $value) {
         exit;
     }
 }
-
-$servername = "localhost";
-$dbpass = "";
-$dbname = "myBase";
-$dbuser = "admin";
-
-//Соединение с проверкой к БД
-$link = mysqli_connect($servername, $dbuser, $dbpass, $dbname);
-if (!$link) {
-      echo 'Не могу соединиться с БД. Код ошибки: ' . mysqli_connect_errno() . ', ошибка: ' . mysqli_connect_error();
-      exit;
-    }
-
 //Подготовка запроса
 $query = "INSERT INTO `users` (`id`, `name`, `login`, `password`) VALUES (NULL, '$username', '$email', '$password')";
 
@@ -34,7 +21,7 @@ if ($result->num_rows > 0)
 {
     echo "<h2><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h2></center>
     ";
-    header( 'Refresh:6; URL=register-form.html' );
+    header( 'Refresh:4; URL=register-form.html' );
     exit;
 }
 else {

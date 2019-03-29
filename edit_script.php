@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once( "include/connection.php" );
+
 //Получение данных с формы
 $taskname = $_POST['taskname'];
 $taskid = $_POST['task_id'];
@@ -23,8 +25,6 @@ if($filename == "") {
     unlink($delfilename);
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=myBase', 'admin', '');
-
 //Запрос в БД
 $sql = "UPDATE `tasks` SET `id`='$taskid', `user_id`='$userid', `taskname`='$taskname', `task`='$taskdesc', `filename`='$filename' WHERE `id`='$taskid'";
 
@@ -34,5 +34,5 @@ $statement->execute();
 //Перенос картинки
 $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
 echo "<h2><center>Редактирование прошло успешно!<br></center></h2>";
-header( 'Refresh:2; URL=list.php' );
+header( 'Refresh:1; URL=list.php' );
 ?>

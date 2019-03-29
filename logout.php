@@ -3,9 +3,9 @@ session_start();
 
 if(isset($_SESSION['name'])) {
     $_SESSION['name'] = NULL;
-    unset($_COOKIE['name']);
+    setcookie("user", $email, time() - 1);
 } else {
-    unset($_COOKIE['name']);
+    setcookie("user", $email, time() - 1);
 }
 
 session_destroy();
