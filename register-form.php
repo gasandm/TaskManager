@@ -1,4 +1,6 @@
-
+<?php
+require_once( "include/check_user.php" );
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -27,7 +29,7 @@
         <label for="inputPassword" class="sr-only">Пароль</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Пароль" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
-        <a href="index.html">Войти</a>
+        <a href="index.php">Войти</a>
         <p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
       </form>
     </div>

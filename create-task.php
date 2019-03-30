@@ -7,7 +7,7 @@ require_once( "include/check_user.php" );
 foreach ($_POST as $key => $value) {
     if(empty($value)) {
         echo "<h2><center>Ошибка ввода. Введите корректные данные.</h2></center>";
-        header( 'Refresh:4; URL=register-form.html' );
+        header( 'Refresh:4; URL=register-form.php' );
         exit;
     }
 }

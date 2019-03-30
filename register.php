@@ -1,11 +1,12 @@
 <?php
 require_once( "include/connection.php" );
+require_once( "include/check_user.php" );
 
 //Проверка на пустоту
 foreach ($_POST as $key => $value) {
     if(empty($value)) {
         echo "<h2><center>Ошибка ввода. Введите корректные данные.</h2></center>";
-        header( 'Refresh:4; URL=register-form.html' );
+        header( 'Refresh:4; URL=register-form.php' );
         exit;
     }
 }
@@ -26,7 +27,7 @@ if ($checkUser)
 {
     echo "<h2><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h2></center>
     ";
-    header( 'Refresh:4; URL=register-form.html' );
+    header( 'Refresh:4; URL=register-form.php' );
     exit;
 }
 else {
@@ -35,7 +36,7 @@ else {
     $statement->execute();
     $result = $statement->fetch();
     echo "<h2><center>Вы успешно зарегистрированы!<br> Перевод на страницу авторизации...</center></h2>";
-    header( 'Refresh:4; URL=index.html' );
+    header( 'Refresh:4; URL=index.php' );
 }
 
 ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once( "include/connection.php" );
+require_once( "include/check_user.php" );
 
 $email = $_POST['email'];
 $password = md5($_POST['password']);
@@ -26,6 +27,6 @@ if ($result)
 else {
     echo "<h2><center>Неверный логин или пароль. Попробуйте еще раз.</center></h2>";
     session_destroy();
-    header( 'Refresh:4; URL=index.html' );
+    header( 'Refresh:4; URL=index.php' );
 }
  ?>
