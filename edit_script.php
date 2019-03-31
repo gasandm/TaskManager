@@ -29,8 +29,7 @@ if($filename == "") {
 //Запрос в БД
 $sql = "UPDATE `tasks` SET `id`='$taskid', `user_id`='$userid', `taskname`='$taskname', `task`='$taskdesc', `filename`='$filename' WHERE `id`='$taskid'";
 
-$statement = $pdo->prepare($sql);
-$statement->execute();
+query($pdo, $sql);
 
 //Перенос картинки
 $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));

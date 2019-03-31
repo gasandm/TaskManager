@@ -6,12 +6,9 @@ require_once( "include/check_user.php" );
 $taskid = $_GET['id'];
 
 //Запрос в БД
-$sql = 'SELECT * from tasks where id=:id';
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':id' => $taskid
-]);
-$task = $statement->fetch(PDO::FETCH_ASSOC);
+$sql = "SELECT * from tasks where id=$taskid";
+
+$task = queryFetch($pdo, $sql);
 ?>
 
 <!doctype html>

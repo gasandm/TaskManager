@@ -20,8 +20,7 @@ $userid = $_SESSION['name'];
 //Добавление в БД и перенос изображения
 $sql = "INSERT INTO `tasks` (`id`, `user_id`, `taskname`, `task`, `filename`) VALUES (NULL, '$userid', '$taskname', '$taskdesc', '$filename')";
 
-$statement = $pdo->prepare($sql);
-$statement->execute();
+query($pdo, $sql);
 
 $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
 echo "<h2><center>Задача успешно добавлена!<br></center></h2>";

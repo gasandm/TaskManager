@@ -1,6 +1,3 @@
-<?php
-require_once( "include/check_user.php" );
-?>
 <!doctype html>
 <html lang="en">
   <head>

@@ -9,11 +9,8 @@ $checkbox = $_POST['remember'];
 
 $sql = "SELECT * FROM `users` WHERE `login` LIKE '$email' and `password` LIKE '$password'";
 
-$statement = $pdo->prepare($sql);
-$statement->execute();
-$result = $statement->fetch(PDO::FETCH_ASSOC);
-
 //Проверка на соответствие
+$result = queryFetch($pdo, $sql);
 if ($result)
 {  //Создание сессии и куки(по желанию)
     $_SESSION['name'] = $_POST['email'];

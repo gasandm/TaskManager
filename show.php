@@ -6,13 +6,9 @@ require_once( "include/check_user.php" );
 $taskid = $_GET['id'];
 
 //Запрос в БД
-$sql = 'SELECT * from tasks where id=:id';
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':id' => $taskid
-]);
+$sql = "SELECT * from tasks where id=$taskid";
 
-$tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
+$task = queryFetch($pdo, $sql);
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,7 +56,6 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
           </div>
         </div>
       </header>
-      <?php foreach ($tasks as $task): ?>
     <div class="form-wrapper text-center">
       <img src="img/<?php echo $task['filename']; ?>" alt="" width="400">
       <h2><?php echo $task['taskname']; ?></h2>
@@ -68,8 +63,6 @@ $tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
         <?php echo $task['task']; ?>
       </p>
     </div>
-<?php endforeach; ?>
-
 <section class="jumbotron text-center">
 <a href="edit.php?id=<?php echo $taskid; ?>" class="btn btn-primary my-2">Редактировать запись</a>
 </section>
