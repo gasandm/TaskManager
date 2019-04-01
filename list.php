@@ -1,14 +1,14 @@
 <?php
 session_start();
 require_once( "include/check_user.php" );
-require_once( "include/connection.php" );
+require_once( "include/db_conn.php" );
+
+$sessId = $_SESSION['name'];
+
 //Запрос в БД
-$sql = 'SELECT * from tasks where user_id=:user_id';
-$statement = $pdo->prepare($sql);
-$statement->execute([
-    ':user_id' => $_SESSION['name']
-]);
-$tasks = $statement->fetchAll(PDO::FETCH_ASSOC);
+$sql = "SELECT * from tasks where user_id='$sessId'";
+
+$tasks = queryFetchAssoc($pdo, $sql);
 ?>
 
 <!doctype html>

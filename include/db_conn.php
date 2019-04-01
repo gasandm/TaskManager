@@ -21,4 +21,13 @@ function queryFetchAssoc($pdo, $sql){
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
+
+function checkForEmpty($arr){
+    foreach ($arr as $key => $value) {
+        if(empty($value)) {
+            echo "<h2><center>Ошибка ввода. Введите корректные данные.<br></h2></center>";
+            echo "<h2><center><a href=" . $_SERVER['HTTP_REFERER'] . ">Назад</a></center></h2>";
+        }
+    }
+}
 ?>

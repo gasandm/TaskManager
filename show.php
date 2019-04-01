@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once( "include/connection.php" );
+require_once( "include/db_conn.php" );
 require_once( "include/check_user.php" );
 
 $taskid = $_GET['id'];

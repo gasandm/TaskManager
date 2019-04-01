@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once( "include/connection.php" );
-require_once( "include/check_user.php" );
+require_once( "include/db_conn.php" );
 
 $email = $_POST['email'];
 $password = md5($_POST['password']);
@@ -14,6 +13,7 @@ $result = queryFetch($pdo, $sql);
 if ($result)
 {  //Создание сессии и куки(по желанию)
     $_SESSION['name'] = $_POST['email'];
+    require_once( "include/check_user.php" );
     //mysqli_close($link);
     if($_POST['remember']) {
         setcookie("user", $email, time() + 604800);

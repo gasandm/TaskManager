@@ -1,11 +1,11 @@
 <?php
-require_once( "include/connection.php" );
+require_once( "include/db_conn.php" );
 
 //Проверка на пустоту
 foreach ($_POST as $key => $value) {
     if(empty($value)) {
         echo "<h2><center>Ошибка ввода. Введите корректные данные.</h2></center>";
-        header( 'Refresh:4; URL=register-form.php' );
+        header( 'Refresh:3; URL=register-form.php' );
         exit;
     }
 }
