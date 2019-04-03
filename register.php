@@ -15,10 +15,13 @@ $password = md5($_POST['password']);
 $username = $_POST['name'];
 
 //Подготовка запроса
-$sqlCompare = "SELECT * FROM `users` WHERE `login` LIKE '$email'";
+$sqlCompare = "SELECT * FROM `users` WHERE `login` LIKE :login";
 
+$paramsCompare = [
+    ':login' => $email,
+];
 //Проверка на существование
-$checkUser = queryFetch($pdo, $sqlCompare);
+$checkUser = queryFetch($pdo, $sqlCompare, $paramsCompare);
 if ($checkUser)
 {
     echo "<h2><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h2></center>
@@ -27,9 +30,14 @@ if ($checkUser)
     exit;
 }
 else {
+    $params = [
+        ':name' => $username,
+        ':login' => $email,
+        ':password' => $password,
+    ];
     //Добавление в БД
-    $sql = "INSERT INTO `users` (`id`, `name`, `login`, `password`) VALUES (NULL, '$username', '$email', '$password')";
-    query($pdo, $sql);
+    $sql = "INSERT INTO `users` (`name`, `login`, `password`) VALUES (:name, :login, :password)";
+    query($pdo, $sql, $params);
     echo "<h2><center>Вы успешно зарегистрированы!<br> Перевод на страницу авторизации...</center></h2>";
     header( 'Refresh:3; URL=index.php' );
 }

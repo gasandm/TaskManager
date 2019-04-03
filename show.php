@@ -6,9 +6,13 @@ require_once( "include/check_user.php" );
 $taskid = $_GET['id'];
 
 //Запрос в БД
-$sql = "SELECT * from tasks where id=$taskid";
+$sql = "SELECT * from tasks where id=:id";
 
-$task = queryFetch($pdo, $sql);
+$params = [
+    ':id' => $taskid,
+];
+
+$task = queryFetch($pdo, $sql, $params);
 ?>
 <!doctype html>
 <html lang="en">

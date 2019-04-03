@@ -3,20 +3,36 @@ $config = require_once 'config.php';
 
 $pdo = new PDO('mysql:host='.$config['host'].';dbname='.$config['db_name'], $config['username'], $config['password']);
 
-function query($pdo, $sql){
+function query($pdo, $sql, $params = []) {
     $statement = $pdo->prepare($sql);
+    if(!empty($params)) {
+        foreach ($params as $key => $val) {
+            $statement->bindValue($key, $val);
+        }
+    }
     $statement->execute();
+    return $statement;
 }
 
-function queryFetch($pdo, $sql){
+function queryFetch($pdo, $sql, $params = []) {
     $statement = $pdo->prepare($sql);
+    if(!empty($params)) {
+        foreach ($params as $key => $val) {
+            $statement->bindValue($key, $val);
+        }
+    }
     $statement->execute();
     $result = $statement->fetch();
     return $result;
 }
 
-function queryFetchAssoc($pdo, $sql){
+function queryFetchAssoc($pdo, $sql, $params = []) {
     $statement = $pdo->prepare($sql);
+    if(!empty($params)) {
+        foreach ($params as $key => $val) {
+            $statement->bindValue($key, $val);
+        }
+    }
     $statement->execute();
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;

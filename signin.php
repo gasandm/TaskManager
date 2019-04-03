@@ -6,15 +6,18 @@ $email = $_POST['email'];
 $password = md5($_POST['password']);
 $checkbox = $_POST['remember'];
 
-$sql = "SELECT * FROM `users` WHERE `login` LIKE '$email' and `password` LIKE '$password'";
+$sql = "SELECT * FROM `users` WHERE `login` LIKE :login and `password` LIKE :password";
 
+$params = [
+    ':login' => $email,
+    ':password' => $password,
+];
 //Проверка на соответствие
-$result = queryFetch($pdo, $sql);
+$result = queryFetch($pdo, $sql, $params);
 if ($result)
 {  //Создание сессии и куки(по желанию)
     $_SESSION['name'] = $_POST['email'];
     require_once( "include/check_user.php" );
-    //mysqli_close($link);
     if($_POST['remember']) {
         setcookie("user", $email, time() + 604800);
     }

@@ -7,9 +7,13 @@ $taskid = $_GET['id'];
 $imgName = $_GET['img_name'];
 
 //Запрос в БД
-$sql = "DELETE from tasks where id=$taskid";
+$sql = "DELETE from tasks where id=:id";
 
-query($pdo, $sql);
+$params = [
+    ':id' => $taskid,
+];
+
+query($pdo, $sql, $params);
 
 $delfilename = "img/".basename($imgName);
 unlink($delfilename);

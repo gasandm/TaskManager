@@ -27,9 +27,17 @@ if($filename == "") {
 }
 
 //Запрос в БД
-$sql = "UPDATE `tasks` SET `id`='$taskid', `user_id`='$userid', `taskname`='$taskname', `task`='$taskdesc', `filename`='$filename' WHERE `id`='$taskid'";
+$sql = "UPDATE `tasks` SET `user_id`=:user_id, `taskname`=:taskname, `task`=:task, `filename`=:filename WHERE `id`=:id";
 
-query($pdo, $sql);
+$params = [
+    ':user_id' => $userid,
+    ':taskname' => $taskname,
+    ':task' => $taskdesc,
+    ':filename' => $filename,
+    ':id' => $taskid,
+];
+
+query($pdo, $sql, $params);
 
 //Перенос картинки
 $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));

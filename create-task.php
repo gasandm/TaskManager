@@ -13,11 +13,21 @@ $userid = $_SESSION['name'];
 checkForEmpty($_POST);
 
 //Добавление в БД и перенос изображения
-$sql = "INSERT INTO `tasks` (`id`, `user_id`, `taskname`, `task`, `filename`) VALUES (NULL, '$userid', '$taskname', '$taskdesc', '$filename')";
+$sql = "INSERT INTO `tasks` (`user_id`, `taskname`, `task`, `filename`) VALUES (:user_id, :taskname, :task, :filename)";
 
-query($pdo, $sql);
+$params = [
+    ':user_id' => $userid,
+    ':taskname' => $taskname,
+    ':task' => $taskdesc,
+    ':filename' => $filename,
+];
 
-$moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
-echo "<h2><center>Задача успешно добавлена!<br></center></h2>";
-header( 'Refresh:1; URL=list.php' );
+if(query($pdo, $sql, $params)) {
+    echo "<h2><center>Задача успешно добавлена!<br></center></h2>";
+    $moveimage = move_uploaded_file($tmpfile, "img/".basename($filename));
+    header( 'Refresh:1; URL=list.php' );
+} else {
+    echo "Запрос не выполнен";
+}
+
 ?>

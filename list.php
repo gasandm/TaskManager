@@ -6,9 +6,13 @@ require_once( "include/db_conn.php" );
 $sessId = $_SESSION['name'];
 
 //Запрос в БД
-$sql = "SELECT * from tasks where user_id='$sessId'";
+$sql = "SELECT * from tasks where user_id=:user_id";
 
-$tasks = queryFetchAssoc($pdo, $sql);
+$params = [
+    ':user_id' => $sessId,
+];
+
+$tasks = queryFetchAssoc($pdo, $sql, $params);
 ?>
 
 <!doctype html>
