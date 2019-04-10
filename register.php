@@ -22,6 +22,7 @@ $paramsCompare = [
 ];
 //Проверка на существование
 $checkUser = queryFetch($pdo, $sqlCompare, $paramsCompare);
+
 if ($checkUser)
 {
     echo "<h2><center>Такой Email-адрес уже используется, возможно вы уже проходили регистрацию. Попробуйте снова...</h2></center>
